@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Go Mastery Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --go-cyan: #00add8;
+    --go-teal: #00d4a8;
+    --accent: #f97316;
+    --yellow: #fbbf24;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --border: #1e2d45;
+    --code-bg: #0d1117;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,173,216,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,168,0.08) 0%, transparent 70%);
+    top: 30%; right: 10%;
+    animation: pulse 8s ease-in-out infinite reverse;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  }
+
+  .gopher-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+    opacity: 0.15;
+    position: relative;
+    z-index: 1;
+  }
+
+  .gopher-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--go-cyan);
+    animation: blink 3s ease-in-out infinite;
+  }
+  .gopher-dot:nth-child(odd) { animation-delay: 1.5s; background: var(--go-teal); }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(0,173,216,0.15);
+    border: 1px solid rgba(0,173,216,0.4);
+    color: var(--go-cyan);
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    position: relative; z-index: 1;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 span.go { color: var(--go-cyan); }
+  .hero h1 span.lang { color: var(--go-teal); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 540px;
+    margin: 0 auto 40px;
+    position: relative; z-index: 1;
+  }
+
+  .hero-sub em { color: var(--yellow); font-style: normal; }
+
+  .stats-row {
+    display: flex;
+    gap: 40px;
+    position: relative; z-index: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat { text-align: center; }
+  .stat .num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--go-cyan);
+    font-family: 'Space Mono', monospace;
+  }
+  .stat .label { font-size: 12px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+
+  /* CONTENT */
+  .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 24px 80px;
+  }
+
+  /* PHASE HEADER */
+  .phase {
+    margin-bottom: 60px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding: 24px 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .phase-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+
+  .phase-1 .phase-header::before { background: var(--go-cyan); }
+  .phase-2 .phase-header::before { background: var(--go-teal); }
+  .phase-3 .phase-header::before { background: var(--yellow); }
+  .phase-4 .phase-header::before { background: var(--accent); }
+  .phase-5 .phase-header::before { background: var(--red); }
+
+  .phase-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 48px;
+    font-weight: 700;
+    opacity: 0.15;
+    line-height: 1;
+    min-width: 70px;
+  }
+
+  .phase-1 .phase-num { color: var(--go-cyan); }
+  .phase-2 .phase-num { color: var(--go-teal); }
+  .phase-3 .phase-num { color: var(--yellow); }
+  .phase-4 .phase-num { color: var(--accent); }
+  .phase-5 .phase-num { color: var(--red); }
+
+  .phase-title h2 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .phase-title p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .phase-tag {
+    margin-left: auto;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .phase-1 .phase-tag { background: rgba(0,173,216,0.12); color: var(--go-cyan); border: 1px solid rgba(0,173,216,0.3); }
+  .phase-2 .phase-tag { background: rgba(0,212,168,0.12); color: var(--go-teal); border: 1px solid rgba(0,212,168,0.3); }
+  .phase-3 .phase-tag { background: rgba(251,191,36,0.12); color: var(--yellow); border: 1px solid rgba(251,191,36,0.3); }
+  .phase-4 .phase-tag { background: rgba(249,115,22,0.12); color: var(--accent); border: 1px solid rgba(249,115,22,0.3); }
+  .phase-5 .phase-tag { background: rgba(239,68,68,0.12); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+
+  /* CARDS */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 20px 24px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .card-icon {
+    font-size: 24px;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  .card-info { flex: 1; }
+
+  .card-info h3 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  .card-info p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .card-toggle {
+    color: var(--muted);
+    font-size: 20px;
+    transition: transform 0.3s;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  .card.open .card-toggle { transform: rotate(180deg); }
+
+  .card-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card.open .card-body { display: block; }
+
+  /* CODE BLOCKS */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .code-label {
+    padding: 8px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .js-label { background: rgba(251,191,36,0.1); color: var(--yellow); border-bottom: 1px solid rgba(251,191,36,0.2); }
+  .go-label { background: rgba(0,173,216,0.1); color: var(--go-cyan); border-bottom: 1px solid rgba(0,173,216,0.2); }
+  .go-label-teal { background: rgba(0,212,168,0.1); color: var(--go-teal); border-bottom: 1px solid rgba(0,212,168,0.2); }
+
+  pre {
+    padding: 16px;
+    overflow-x: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #c9d1d9;
+  }
+
+  .kw { color: #ff79c6; }
+  .fn { color: #50fa7b; }
+  .str { color: #f1fa8c; }
+  .num { color: #bd93f9; }
+  .cm { color: #6272a4; font-style: italic; }
+  .ty { color: var(--go-cyan); }
+  .pkg { color: var(--go-teal); }
+  .op { color: #ff5555; }
+
+  /* TOPIC LIST */
+  .topic-list {
+    list-style: none;
+    margin: 16px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  @media (max-width: 500px) { .topic-list { grid-template-columns: 1fr; } }
+
+  .topic-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-radius: 8px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+  }
+
+  .topic-list li::before {
+    content: '▸';
+    color: var(--go-cyan);
+    font-size: 10px;
+  }
+
+  /* LINKS */
+  .ref-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .ref-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    text-decoration: none;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
+
+  .ref-link:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .ref-link.official { color: var(--go-cyan); border-color: rgba(0,173,216,0.4); background: rgba(0,173,216,0.08); }
+  .ref-link.video { color: var(--red); border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.08); }
+  .ref-link.practice { color: var(--go-teal); border-color: rgba(0,212,168,0.4); background: rgba(0,212,168,0.08); }
+  .ref-link.book { color: var(--yellow); border-color: rgba(251,191,36,0.4); background: rgba(251,191,36,0.08); }
+  .ref-link.blog { color: var(--accent); border-color: rgba(249,115,22,0.4); background: rgba(249,115,22,0.08); }
+
+  /* DIVIDER */
+  .section-divider {
+    text-align: center;
+    margin: 60px 0 40px;
+    position: relative;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .section-divider::before, .section-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%; height: 1px;
+    width: 30%;
+    background: var(--border);
+  }
+
+  .section-divider::before { left: 0; }
+  .section-divider::after { right: 0; }
+
+  /* NOTES */
+  .note {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .note.info { background: rgba(0,173,216,0.08); border: 1px solid rgba(0,173,216,0.25); }
+  .note.warn { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); }
+  .note.tip { background: rgba(0,212,168,0.08); border: 1px solid rgba(0,212,168,0.25); }
+  .note.danger { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); }
+
+  .note-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none;
+    margin: 16px 0;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--muted);
+  }
+
+  .checklist li::before {
+    content: '◻';
+    color: var(--go-cyan);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    padding: 20px 0;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .timeline-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 40px;
+  }
+
+  .timeline-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--go-cyan);
+    border: 2px solid var(--bg);
+    outline: 2px solid var(--go-cyan);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .timeline-line {
+    flex: 1;
+    width: 2px;
+    background: var(--border);
+    margin-top: 4px;
+  }
+
+  .timeline-content {
+    flex: 1;
+    padding-bottom: 8px;
+  }
+
+  .timeline-content h4 { font-size: 15px; margin-bottom: 4px; }
+  .timeline-content p { font-size: 13px; color: var(--muted); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 60px 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .footer strong { color: var(--go-cyan); }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    background: var(--border);
+    border-radius: 999px;
+    height: 6px;
+    margin: 12px 0 4px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--go-cyan), var(--go-teal));
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* SCROLL ANIMATION */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* INLINE CODE */
+  code {
+    background: var(--code-bg);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--go-cyan);
+    border: 1px solid var(--border);
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 60px;
+  }
+
+  .toc h3 {
+    font-size: 14px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .toc-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 500px) { .toc-list { grid-template-columns: 1fr; } }
+
+  .toc-list li a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    transition: all 0.2s;
+  }
+
+  .toc-list li a:hover {
+    border-color: rgba(0,173,216,0.4);
+    color: var(--go-cyan);
+  }
+
+  .toc-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="gopher-grid">
+    <div class="gopher-dot"></div><div class="gopher-dot"></div><div class="gopher-dot"></div><div class="gopher-dot"></div>
+    <div class="gopher-dot"></div><div class="gopher-dot"></div><div class="gopher-dot"></div><div class="gopher-dot"></div>
+  </div>
+
+  <div class="badge">JS Developer → Go Senior Engineer</div>
+
+  <h1>
+    <span class="go">Go</span><span class="lang">Lang</span><br/>Mastery<br/>Roadmap
+  </h1>
+
+  <p class="hero-sub">
+    A complete, <em>no-fluff</em> guide from absolute zero to senior Go engineer — built for developers who already know JavaScript.
+  </p>
+
+  <div class="stats-row">
+    <div class="stat">
+      <div class="num">5</div>
+      <div class="label">Phases</div>
+    </div>
+    <div class="stat">
+      <div class="num">30+</div>
+      <div class="label">Topics</div>
+    </div>
+    <div class="stat">
+      <div class="num">50+</div>
+      <div class="label">Code Examples</div>
+    </div>
+    <div class="stat">
+      <div class="num">40+</div>
+      <div class="label">References</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- TOC -->
+  <div class="toc fade-in">
+    <h3>📍 Table of Contents</h3>
+    <ul class="toc-list">
+      <li><a href="#phase1"><span class="toc-num">01</span> Foundations & Setup</a></li>
+      <li><a href="#phase2"><span class="toc-num">02</span> Core Language</a></li>
+      <li><a href="#phase3"><span class="toc-num">03</span> Intermediate Go</a></li>
+      <li><a href="#phase4"><span class="toc-num">04</span> Advanced Go</a></li>
+      <li><a href="#phase5"><span class="toc-num">05</span> Senior Engineering</a></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="phase phase-1 fade-in" id="phase1">
+    <div class="phase-header">
+      <div class="phase-num">01</div>
+      <div class="phase-title">
+        <h2>🚀 Foundations & Setup</h2>
+        <p>Understand what Go is, why it exists, and get your environment ready.</p>
+      </div>
+      <span class="phase-tag">WEEK 1</span>
+    </div>
+
+    <div class="cards">
+
+      <!-- Card: What is Go -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🐹</div>
+          <div class="card-info">
+            <h3>What is Go & Why Learn It?</h3>
+            <p>History, philosophy, and use cases of Go vs JavaScript.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="note info">
+            <span class="note-icon">ℹ️</span>
+            <div>Go (Golang) was created at Google in 2009 by <strong>Robert Griesemer, Rob Pike, and Ken Thompson</strong>. It was designed to solve real-world problems at Google scale — fast compilation, easy concurrency, and simplicity.</div>
+          </div>
+
+          <div class="compare-grid">
+            <div>
+              <h4 style="margin-bottom:12px;font-size:14px;color:var(--muted);">JavaScript Is Great For:</h4>
+              <ul class="checklist">
+                <li>Frontend/browser apps</li>
+                <li>Rapid prototyping</li>
+                <li>Dynamic/loosely typed code</li>
+                <li>Event-driven I/O (Node.js)</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="margin-bottom:12px;font-size:14px;color:var(--go-cyan);">Go Is Great For:</h4>
+              <ul class="checklist" style="color:var(--text)">
+                <li>Microservices & APIs</li>
+                <li>CLI tools & system software</li>
+                <li>High-performance backends</li>
+                <li>Cloud-native / Kubernetes</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="note tip">
+            <span class="note-icon">💡</span>
+            <div>Companies using Go: <strong>Google, Uber, Docker, Kubernetes, Cloudflare, Dropbox, Twitch</strong>. Go powers most of the cloud-native ecosystem.</div>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/doc/faq" target="_blank">📖 Go FAQ — Official</a>
+            <a class="ref-link video" href="https://www.youtube.com/watch?v=x15c2gVL9KE" target="_blank">▶ Go in 100 Seconds</a>
+            <a class="ref-link official" href="https://go.dev/blog/go-brand" target="_blank">🐹 Go Blog</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Installation -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">⚙️</div>
+          <div class="card-info">
+            <h3>Installation & Environment Setup</h3>
+            <p>Install Go, setup VS Code, understand GOPATH and modules.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 Terminal — Setup Steps</div>
+            <pre><span class="cm"># 1. Download Go from https://go.dev/dl/</span>
+<span class="cm"># 2. Verify installation</span>
+go version      <span class="cm"># go version go1.22.x linux/amd64</span>
+
+<span class="cm"># 3. Create your first project (Go Modules)</span>
+mkdir hello-go && cd hello-go
+go mod init github.com/yourname/hello-go
+
+<span class="cm"># 4. Run your code</span>
+go run main.go
+
+<span class="cm"># 5. Build a binary</span>
+go build -o hello .
+./hello
+
+<span class="cm"># VS Code Extensions to install:</span>
+<span class="cm"># → Go (by Google) — gopls, formatting, debugging</span></pre>
+          </div>
+
+          <div class="note warn">
+            <span class="note-icon">⚠️</span>
+            <div>Unlike Node.js with <code>package.json</code>, Go uses <strong>modules</strong> (<code>go.mod</code>). Think of <code>go.mod</code> as your <code>package.json</code> and <code>go.sum</code> as your <code>package-lock.json</code>.</div>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/dl/" target="_blank">⬇️ Download Go</a>
+            <a class="ref-link official" href="https://go.dev/doc/install" target="_blank">📖 Install Guide</a>
+            <a class="ref-link blog" href="https://go.dev/doc/modules/gomod-ref" target="_blank">📦 go.mod Reference</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Hello World -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">👋</div>
+          <div class="card-info">
+            <h3>Hello World & Go Program Structure</h3>
+            <p>Understand packages, imports, and the main function.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ JavaScript</div>
+              <pre><span class="cm">// hello.js</span>
+<span class="fn">console</span>.log(<span class="str">"Hello, World!"</span>)
+
+<span class="cm">// Run: node hello.js</span></pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 Go</div>
+              <pre><span class="cm">// main.go</span>
+<span class="kw">package</span> <span class="pkg">main</span>
+
+<span class="kw">import</span> <span class="str">"fmt"</span>
+
+<span class="kw">func</span> <span class="fn">main</span>() {
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(<span class="str">"Hello, World!"</span>)
+}
+<span class="cm">// Run: go run main.go</span></pre>
+            </div>
+          </div>
+
+          <div class="note info">
+            <span class="note-icon">📌</span>
+            <div>
+              <strong>Key Rules:</strong><br/>
+              • Every Go file must start with <code>package name</code><br/>
+              • The entry point is always <code>func main()</code> in <code>package main</code><br/>
+              • Unused imports = <strong>compile error</strong> (unlike JS)<br/>
+              • <code>fmt</code> = "format" — Go's print/format package
+            </div>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/tour/welcome/1" target="_blank">🎓 A Tour of Go</a>
+            <a class="ref-link practice" href="https://play.golang.org" target="_blank">🛝 Go Playground</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider">Core Language</div>
+
+  <!-- PHASE 2 -->
+  <div class="phase phase-2 fade-in" id="phase2">
+    <div class="phase-header">
+      <div class="phase-num">02</div>
+      <div class="phase-title">
+        <h2>🧱 Core Language Concepts</h2>
+        <p>Variables, types, control flow, functions, arrays, maps — the building blocks.</p>
+      </div>
+      <span class="phase-tag">WEEK 2–3</span>
+    </div>
+
+    <div class="cards">
+
+      <!-- Variables & Types -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">📦</div>
+          <div class="card-info">
+            <h3>Variables, Types & Zero Values</h3>
+            <p>Go is statically typed. No <code>undefined</code> — everything has a default (zero) value.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ JavaScript</div>
+              <pre><span class="cm">// Dynamic — no types</span>
+<span class="kw">let</span> name = <span class="str">"Alice"</span>
+<span class="kw">let</span> age = <span class="num">30</span>
+<span class="kw">let</span> score = <span class="num">9.5</span>
+<span class="kw">let</span> active = <span class="kw">true</span>
+<span class="kw">let</span> nothing   <span class="cm">// undefined</span>
+
+<span class="cm">// age = "thirty" ← allowed!</span></pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 Go</div>
+              <pre><span class="cm">// Statically typed</span>
+<span class="kw">var</span> name <span class="ty">string</span> = <span class="str">"Alice"</span>
+<span class="kw">var</span> age <span class="ty">int</span> = <span class="num">30</span>
+<span class="kw">var</span> score <span class="ty">float64</span> = <span class="num">9.5</span>
+<span class="kw">var</span> active <span class="ty">bool</span> = <span class="kw">true</span>
+<span class="kw">var</span> nothing <span class="ty">int</span>  <span class="cm">// = 0 (zero value!)</span>
+
+<span class="cm">// Short declaration (preferred)</span>
+city := <span class="str">"Dhaka"</span>  <span class="cm">// type inferred</span></pre>
+            </div>
+          </div>
+
+          <div class="note tip">
+            <span class="note-icon">💡</span>
+            <div>
+              <strong>Go Zero Values (no undefined/null surprises):</strong><br/>
+              <code>int</code> → <code>0</code> &nbsp;|&nbsp; <code>float64</code> → <code>0.0</code> &nbsp;|&nbsp; <code>string</code> → <code>""</code> &nbsp;|&nbsp; <code>bool</code> → <code>false</code> &nbsp;|&nbsp; pointers/slices/maps → <code>nil</code>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-top:16px">
+            <div class="code-label go-label-teal">🐹 All Basic Types</div>
+            <pre><span class="cm">// Integers</span>
+<span class="kw">var</span> a <span class="ty">int</span>     <span class="cm">// platform-sized (64-bit on 64-bit OS)</span>
+<span class="kw">var</span> b <span class="ty">int8</span>    <span class="cm">// -128 to 127</span>
+<span class="kw">var</span> c <span class="ty">int64</span>   <span class="cm">// -9 quadrillion to 9 quadrillion</span>
+<span class="kw">var</span> d <span class="ty">uint</span>    <span class="cm">// unsigned (no negatives)</span>
+
+<span class="cm">// Floats</span>
+<span class="kw">var</span> f1 <span class="ty">float32</span>
+<span class="kw">var</span> f2 <span class="ty">float64</span>  <span class="cm">// prefer this</span>
+
+<span class="cm">// Text</span>
+<span class="kw">var</span> s <span class="ty">string</span>    <span class="cm">// UTF-8 encoded</span>
+<span class="kw">var</span> r <span class="ty">rune</span>      <span class="cm">// alias for int32, represents Unicode char</span>
+<span class="kw">var</span> by <span class="ty">byte</span>     <span class="cm">// alias for uint8</span>
+
+<span class="cm">// Constants (compile-time, cannot change)</span>
+<span class="kw">const</span> Pi = <span class="num">3.14159</span>
+<span class="kw">const</span> AppName = <span class="str">"MyApp"</span></pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/tour/basics/8" target="_blank">📖 Variables — Tour of Go</a>
+            <a class="ref-link blog" href="https://go.dev/ref/spec#Types" target="_blank">📋 Type Spec</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Control Flow -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔀</div>
+          <div class="card-info">
+            <h3>Control Flow — if, for, switch</h3>
+            <p>Go only has <code>for</code> loops — no <code>while</code>, no <code>do-while</code>.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ JavaScript</div>
+              <pre><span class="cm">// if/else</span>
+<span class="kw">if</span> (age >= <span class="num">18</span>) {
+  console.<span class="fn">log</span>(<span class="str">"adult"</span>)
+} <span class="kw">else</span> {
+  console.<span class="fn">log</span>(<span class="str">"minor"</span>)
+}
+
+<span class="cm">// for loop</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < <span class="num">5</span>; i++) {
+  console.<span class="fn">log</span>(i)
+}
+
+<span class="cm">// while</span>
+<span class="kw">while</span> (x > <span class="num">0</span>) { x-- }</pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 Go</div>
+              <pre><span class="cm">// if/else (no parentheses!)</span>
+<span class="kw">if</span> age >= <span class="num">18</span> {
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(<span class="str">"adult"</span>)
+} <span class="kw">else</span> {
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(<span class="str">"minor"</span>)
+}
+
+<span class="cm">// Classic for</span>
+<span class="kw">for</span> i := <span class="num">0</span>; i < <span class="num">5</span>; i++ {
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(i)
+}
+
+<span class="cm">// "while" in Go</span>
+<span class="kw">for</span> x > <span class="num">0</span> { x-- }
+
+<span class="cm">// Infinite loop</span>
+<span class="kw">for</span> { <span class="cm">/* runs forever */</span> }</pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-top:16px">
+            <div class="code-label go-label">🐹 Switch & if with init statement</div>
+            <pre><span class="cm">// if with init statement (unique to Go!)</span>
+<span class="kw">if</span> err := <span class="fn">doSomething</span>(); err != <span class="kw">nil</span> {
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(<span class="str">"Error:"</span>, err)
+}
+<span class="cm">// err is scoped to this if block only</span>
+
+<span class="cm">// Switch (no break needed, no fallthrough by default)</span>
+<span class="kw">switch</span> day {
+<span class="kw">case</span> <span class="str">"Mon"</span>, <span class="str">"Tue"</span>:
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(<span class="str">"Weekday"</span>)
+<span class="kw">case</span> <span class="str">"Sat"</span>, <span class="str">"Sun"</span>:
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(<span class="str">"Weekend"</span>)
+<span class="kw">default</span>:
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(<span class="str">"Unknown"</span>)
+}</pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/tour/flowcontrol/1" target="_blank">📖 Flow Control — Tour</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Functions -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div class="card-info">
+            <h3>Functions — Multiple Returns & Named Results</h3>
+            <p>Go functions can return multiple values — this is how errors are handled.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ JavaScript</div>
+              <pre><span class="cm">// Single return</span>
+<span class="kw">function</span> <span class="fn">add</span>(a, b) {
+  <span class="kw">return</span> a + b
+}
+
+<span class="cm">// "Multiple returns" via object</span>
+<span class="kw">function</span> <span class="fn">divide</span>(a, b) {
+  <span class="kw">if</span> (b === <span class="num">0</span>)
+    <span class="kw">return</span> { result: <span class="kw">null</span>, error: <span class="str">"divide by zero"</span> }
+  <span class="kw">return</span> { result: a / b, error: <span class="kw">null</span> }
+}
+
+<span class="cm">// Arrow functions</span>
+<span class="kw">const</span> square = (n) => n * n</pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 Go</div>
+              <pre><span class="cm">// Typed params & return</span>
+<span class="kw">func</span> <span class="fn">add</span>(a, b <span class="ty">int</span>) <span class="ty">int</span> {
+  <span class="kw">return</span> a + b
+}
+
+<span class="cm">// Multiple returns (idiomatic!)</span>
+<span class="kw">func</span> <span class="fn">divide</span>(a, b <span class="ty">float64</span>) (<span class="ty">float64</span>, <span class="ty">error</span>) {
+  <span class="kw">if</span> b == <span class="num">0</span> {
+    <span class="kw">return</span> <span class="num">0</span>, <span class="pkg">fmt</span>.<span class="fn">Errorf</span>(<span class="str">"cannot divide by zero"</span>)
+  }
+  <span class="kw">return</span> a / b, <span class="kw">nil</span>
+}
+
+<span class="cm">// Usage</span>
+result, err := <span class="fn">divide</span>(<span class="num">10</span>, <span class="num">2</span>)
+<span class="kw">if</span> err != <span class="kw">nil</span> {
+  <span class="pkg">log</span>.<span class="fn">Fatal</span>(err)
+}
+
+<span class="cm">// Variadic function</span>
+<span class="kw">func</span> <span class="fn">sum</span>(nums ...<span class="ty">int</span>) <span class="ty">int</span> {
+  total := <span class="num">0</span>
+  <span class="kw">for</span> _, n := <span class="kw">range</span> nums {
+    total += n
+  }
+  <span class="kw">return</span> total
+}</pre>
+            </div>
+          </div>
+
+          <div class="note danger">
+            <span class="note-icon">🚨</span>
+            <div>In Go, error handling is <strong>explicit</strong>. You ALWAYS check <code>err != nil</code> after every operation that can fail. This is the #1 difference from JS try/catch patterns. Ignoring errors is a code smell.</div>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/tour/basics/4" target="_blank">📖 Functions — Tour</a>
+            <a class="ref-link blog" href="https://go.dev/blog/errors-are-values" target="_blank">📋 Errors are Values</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrays, Slices, Maps -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🗂️</div>
+          <div class="card-info">
+            <h3>Arrays, Slices & Maps</h3>
+            <p>Slices are like JS arrays. Maps are like JS objects/Maps.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ JavaScript</div>
+              <pre><span class="cm">// Array (dynamic)</span>
+<span class="kw">const</span> nums = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]
+nums.push(<span class="num">4</span>)
+nums.length  <span class="cm">// 4</span>
+nums[<span class="num">1</span>:<span class="num">3</span>]   <span class="cm">// not valid in JS</span>
+
+<span class="cm">// Object / Map</span>
+<span class="kw">const</span> user = { name: <span class="str">"Alice"</span>, age: <span class="num">30</span> }
+user.city = <span class="str">"Dhaka"</span>
+<span class="kw">delete</span> user.age</pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 Go</div>
+              <pre><span class="cm">// Array (fixed size, rarely used)</span>
+<span class="kw">var</span> arr [<span class="num">3</span>]<span class="ty">int</span> = [<span class="num">3</span>]<span class="ty">int</span>{<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>}
+
+<span class="cm">// Slice (dynamic, use this!)</span>
+nums := []<span class="ty">int</span>{<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>}
+nums = <span class="fn">append</span>(nums, <span class="num">4</span>)
+<span class="fn">len</span>(nums)         <span class="cm">// 4</span>
+nums[<span class="num">1</span>:<span class="num">3</span>]         <span class="cm">// [2 3] — slicing!</span>
+
+<span class="cm">// Map</span>
+user := <span class="kw">map</span>[<span class="ty">string</span>]<span class="ty">interface</span>{}{
+  <span class="str">"name"</span>: <span class="str">"Alice"</span>,
+  <span class="str">"age"</span>:  <span class="num">30</span>,
+}
+user[<span class="str">"city"</span>] = <span class="str">"Dhaka"</span>
+<span class="kw">delete</span>(user, <span class="str">"age"</span>)
+
+<span class="cm">// Check if key exists</span>
+val, ok := user[<span class="str">"name"</span>]
+<span class="kw">if</span> ok { <span class="pkg">fmt</span>.<span class="fn">Println</span>(val) }</pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-top:16px">
+            <div class="code-label go-label-teal">🐹 Range — iterating (like forEach)</div>
+            <pre><span class="cm">// Range over slice</span>
+fruits := []<span class="ty">string</span>{<span class="str">"apple"</span>, <span class="str">"banana"</span>, <span class="str">"mango"</span>}
+<span class="kw">for</span> i, fruit := <span class="kw">range</span> fruits {
+  <span class="pkg">fmt</span>.<span class="fn">Printf</span>(<span class="str">"%d: %s\n"</span>, i, fruit)
+}
+
+<span class="cm">// Range over map</span>
+scores := <span class="kw">map</span>[<span class="ty">string</span>]<span class="ty">int</span>{<span class="str">"Alice"</span>: <span class="num">95</span>, <span class="str">"Bob"</span>: <span class="num">87</span>}
+<span class="kw">for</span> name, score := <span class="kw">range</span> scores {
+  <span class="pkg">fmt</span>.<span class="fn">Printf</span>(<span class="str">"%s scored %d\n"</span>, name, score)
+}
+
+<span class="cm">// _ to ignore index or value</span>
+<span class="kw">for</span> _, fruit := <span class="kw">range</span> fruits { <span class="pkg">fmt</span>.<span class="fn">Println</span>(fruit) }</pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/tour/moretypes/7" target="_blank">📖 Slices — Tour</a>
+            <a class="ref-link official" href="https://go.dev/tour/moretypes/19" target="_blank">📖 Maps — Tour</a>
+            <a class="ref-link blog" href="https://go.dev/blog/slices-intro" target="_blank">📋 Slices in depth</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Structs -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🏗️</div>
+          <div class="card-info">
+            <h3>Structs — Go's "Classes"</h3>
+            <p>Go has no classes. Structs + Methods replace them. This is Go's OOP.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ JavaScript Class</div>
+              <pre><span class="kw">class</span> <span class="fn">Person</span> {
+  <span class="kw">constructor</span>(name, age) {
+    <span class="kw">this</span>.name = name
+    <span class="kw">this</span>.age = age
+  }
+  <span class="fn">greet</span>() {
+    <span class="kw">return</span> <span class="str">`Hi, I'm ${this.name}`</span>
+  }
+}
+<span class="kw">const</span> p = <span class="kw">new</span> <span class="fn">Person</span>(<span class="str">"Alice"</span>, <span class="num">30</span>)
+p.<span class="fn">greet</span>()</pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 Go Struct + Method</div>
+              <pre><span class="kw">type</span> <span class="ty">Person</span> <span class="kw">struct</span> {
+  Name <span class="ty">string</span>
+  Age  <span class="ty">int</span>
+}
+
+<span class="cm">// Method on struct</span>
+<span class="kw">func</span> (p <span class="ty">Person</span>) <span class="fn">Greet</span>() <span class="ty">string</span> {
+  <span class="kw">return</span> <span class="str">"Hi, I'm "</span> + p.Name
+}
+
+<span class="cm">// Constructor pattern</span>
+<span class="kw">func</span> <span class="fn">NewPerson</span>(name <span class="ty">string</span>, age <span class="ty">int</span>) *<span class="ty">Person</span> {
+  <span class="kw">return</span> &<span class="ty">Person</span>{Name: name, Age: age}
+}
+
+p := <span class="fn">NewPerson</span>(<span class="str">"Alice"</span>, <span class="num">30</span>)
+p.<span class="fn">Greet</span>()</pre>
+            </div>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/tour/moretypes/2" target="_blank">📖 Structs — Tour</a>
+            <a class="ref-link official" href="https://go.dev/tour/methods/1" target="_blank">📖 Methods — Tour</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider">Intermediate</div>
+
+  <!-- PHASE 3 -->
+  <div class="phase phase-3 fade-in" id="phase3">
+    <div class="phase-header">
+      <div class="phase-num">03</div>
+      <div class="phase-title">
+        <h2>🔧 Intermediate Go</h2>
+        <p>Interfaces, pointers, error handling, goroutines, channels.</p>
+      </div>
+      <span class="phase-tag">WEEK 4–6</span>
+    </div>
+
+    <div class="cards">
+
+      <!-- Interfaces -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🎭</div>
+          <div class="card-info">
+            <h3>Interfaces — Implicit & Powerful</h3>
+            <p>Unlike TypeScript, Go interfaces are satisfied <em>implicitly</em> — no <code>implements</code> keyword.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ TypeScript Interface</div>
+              <pre><span class="kw">interface</span> <span class="ty">Animal</span> {
+  <span class="fn">speak</span>(): <span class="ty">string</span>
+}
+
+<span class="cm">// Must explicitly implement</span>
+<span class="kw">class</span> <span class="fn">Dog</span> <span class="kw">implements</span> <span class="ty">Animal</span> {
+  <span class="fn">speak</span>() { <span class="kw">return</span> <span class="str">"Woof"</span> }
+}
+
+<span class="kw">class</span> <span class="fn">Cat</span> <span class="kw">implements</span> <span class="ty">Animal</span> {
+  <span class="fn">speak</span>() { <span class="kw">return</span> <span class="str">"Meow"</span> }
+}</pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 Go Interface (implicit!)</div>
+              <pre><span class="kw">type</span> <span class="ty">Animal</span> <span class="kw">interface</span> {
+  <span class="fn">Speak</span>() <span class="ty">string</span>
+}
+
+<span class="cm">// Dog satisfies Animal automatically</span>
+<span class="kw">type</span> <span class="ty">Dog</span> <span class="kw">struct</span>{}
+<span class="kw">func</span> (d <span class="ty">Dog</span>) <span class="fn">Speak</span>() <span class="ty">string</span> { <span class="kw">return</span> <span class="str">"Woof"</span> }
+
+<span class="kw">type</span> <span class="ty">Cat</span> <span class="kw">struct</span>{}
+<span class="kw">func</span> (c <span class="ty">Cat</span>) <span class="fn">Speak</span>() <span class="ty">string</span> { <span class="kw">return</span> <span class="str">"Meow"</span> }
+
+<span class="cm">// Polymorphism!</span>
+<span class="kw">func</span> <span class="fn">makeSound</span>(a <span class="ty">Animal</span>) {
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(a.<span class="fn">Speak</span>())
+}</pre>
+            </div>
+          </div>
+
+          <div class="note tip">
+            <span class="note-icon">💡</span>
+            <div><strong>Key insight:</strong> If a type has the same methods as an interface, it automatically satisfies it. This enables amazing decoupling and testability. The most important Go interface is <code>error</code> — it just requires one method: <code>Error() string</code></div>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/tour/methods/9" target="_blank">📖 Interfaces — Tour</a>
+            <a class="ref-link blog" href="https://go.dev/doc/effective_go#interfaces" target="_blank">📋 Effective Go — Interfaces</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pointers -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">👉</div>
+          <div class="card-info">
+            <h3>Pointers — The Key to Mutation</h3>
+            <p>JS passes objects by reference automatically. In Go, you choose when to use a pointer.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 Pointer Basics</div>
+            <pre><span class="kw">func</span> <span class="fn">main</span>() {
+  x := <span class="num">42</span>
+  p := &x          <span class="cm">// p is a *int (pointer to x)</span>
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(*p)  <span class="cm">// 42 — dereference</span>
+  *p = <span class="num">100</span>         <span class="cm">// modify x through pointer</span>
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(x)   <span class="cm">// 100</span>
+}
+
+<span class="cm">// Without pointer — copy, original unchanged</span>
+<span class="kw">func</span> <span class="fn">noChange</span>(n <span class="ty">int</span>) { n = <span class="num">999</span> }
+
+<span class="cm">// With pointer — modifies original</span>
+<span class="kw">func</span> <span class="fn">withChange</span>(n *<span class="ty">int</span>) { *n = <span class="num">999</span> }
+
+<span class="cm">// Pointer receiver — modify struct in method</span>
+<span class="kw">func</span> (p *<span class="ty">Person</span>) <span class="fn">Birthday</span>() {
+  p.Age++  <span class="cm">// actually modifies the struct</span>
+}</pre>
+          </div>
+
+          <div class="note info">
+            <span class="note-icon">📌</span>
+            <div>
+              <strong>Rule of thumb:</strong><br/>
+              • Use pointer receiver <code>*Type</code> when the method needs to modify the struct<br/>
+              • Use value receiver <code>Type</code> when you just need to read<br/>
+              • Large structs should use pointer receivers for performance (avoids copying)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goroutines & Channels -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div class="card-info">
+            <h3>Goroutines & Channels — Go's Superpower</h3>
+            <p>Go's concurrency model is revolutionary. Goroutines are like ultra-light threads.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ JavaScript async/await</div>
+              <pre><span class="cm">// JS is single-threaded</span>
+<span class="kw">async function</span> <span class="fn">fetchData</span>() {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(url)
+  <span class="kw">return</span> res.<span class="fn">json</span>()
+}
+
+<span class="cm">// "Parallel" via Promise.all</span>
+<span class="kw">await</span> Promise.<span class="fn">all</span>([<span class="fn">fetch1</span>(), <span class="fn">fetch2</span>()])</pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 Goroutines (true parallel!)</div>
+              <pre><span class="cm">// Launch goroutine with 'go'</span>
+<span class="kw">go</span> <span class="fn">doWork</span>()   <span class="cm">// runs concurrently!</span>
+
+<span class="cm">// Channel — safe communication</span>
+ch := <span class="fn">make</span>(<span class="kw">chan</span> <span class="ty">string</span>)
+
+<span class="kw">go func</span>() {
+  ch <- <span class="str">"Hello from goroutine"</span>
+}()
+
+msg := <-ch  <span class="cm">// receive (blocks until ready)</span>
+<span class="pkg">fmt</span>.<span class="fn">Println</span>(msg)</pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-top:16px">
+            <div class="code-label go-label-teal">🐹 WaitGroup — wait for goroutines</div>
+            <pre><span class="kw">import</span> <span class="str">"sync"</span>
+
+<span class="kw">func</span> <span class="fn">main</span>() {
+  <span class="kw">var</span> wg sync.<span class="ty">WaitGroup</span>
+
+  <span class="kw">for</span> i := <span class="num">0</span>; i < <span class="num">5</span>; i++ {
+    wg.<span class="fn">Add</span>(<span class="num">1</span>)
+    <span class="kw">go func</span>(id <span class="ty">int</span>) {
+      <span class="kw">defer</span> wg.<span class="fn">Done</span>()
+      <span class="pkg">fmt</span>.<span class="fn">Printf</span>(<span class="str">"Worker %d done\n"</span>, id)
+    }(i)
+  }
+
+  wg.<span class="fn">Wait</span>()  <span class="cm">// blocks until all goroutines finish</span>
+  <span class="pkg">fmt</span>.<span class="fn">Println</span>(<span class="str">"All workers done!"</span>)
+}</pre>
+          </div>
+
+          <div class="note tip">
+            <span class="note-icon">💡</span>
+            <div><strong>Go's concurrency mantra:</strong> <em>"Do not communicate by sharing memory; share memory by communicating."</em> — use channels to pass data between goroutines instead of mutexes (when possible).</div>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/tour/concurrency/1" target="_blank">📖 Goroutines — Tour</a>
+            <a class="ref-link video" href="https://www.youtube.com/watch?v=oV9rvDllKEg" target="_blank">▶ Concurrency in Go</a>
+            <a class="ref-link blog" href="https://go.dev/blog/concurrency-is-not-parallelism" target="_blank">📋 Concurrency vs Parallelism</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Handling -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🛡️</div>
+          <div class="card-info">
+            <h3>Error Handling — The Go Way</h3>
+            <p>No try/catch. Errors are values returned from functions.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 Custom Errors & Wrapping</div>
+            <pre"><span class="kw">import</span> <span class="str">"errors"</span>
+
+<span class="cm">// Sentinel errors</span>
+<span class="kw">var</span> ErrNotFound = <span class="pkg">errors</span>.<span class="fn">New</span>(<span class="str">"not found"</span>)
+
+<span class="cm">// Custom error type</span>
+<span class="kw">type</span> <span class="ty">ValidationError</span> <span class="kw">struct</span> {
+  Field   <span class="ty">string</span>
+  Message <span class="ty">string</span>
+}
+<span class="kw">func</span> (e *<span class="ty">ValidationError</span>) <span class="fn">Error</span>() <span class="ty">string</span> {
+  <span class="kw">return</span> e.Field + <span class="str">": "</span> + e.Message
+}
+
+<span class="cm">// Error wrapping (Go 1.13+)</span>
+<span class="kw">func</span> <span class="fn">getUser</span>(id <span class="ty">int</span>) (*<span class="ty">User</span>, <span class="ty">error</span>) {
+  user, err := <span class="fn">dbQuery</span>(id)
+  <span class="kw">if</span> err != <span class="kw">nil</span> {
+    <span class="kw">return</span> <span class="kw">nil</span>, <span class="pkg">fmt</span>.<span class="fn">Errorf</span>(<span class="str">"getUser(%d): %w"</span>, id, err)
+  }
+  <span class="kw">return</span> user, <span class="kw">nil</span>
+}
+
+<span class="cm">// Unwrapping errors</span>
+<span class="kw">if</span> <span class="pkg">errors</span>.<span class="fn">Is</span>(err, ErrNotFound) { ... }
+<span class="kw">var</span> ve *<span class="ty">ValidationError</span>
+<span class="kw">if</span> <span class="pkg">errors</span>.<span class="fn">As</span>(err, &ve) { ... }</pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/blog/error-handling-and-go" target="_blank">📖 Error Handling</a>
+            <a class="ref-link blog" href="https://go.dev/blog/go1.13-errors" target="_blank">📋 Wrapping Errors (1.13+)</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider">Advanced</div>
+
+  <!-- PHASE 4 -->
+  <div class="phase phase-4 fade-in" id="phase4">
+    <div class="phase-header">
+      <div class="phase-num">04</div>
+      <div class="phase-title">
+        <h2>🧠 Advanced Go</h2>
+        <p>Generics, testing, HTTP servers, databases, context, profiling.</p>
+      </div>
+      <span class="phase-tag">WEEK 7–10</span>
+    </div>
+
+    <div class="cards">
+
+      <!-- HTTP Server -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🌐</div>
+          <div class="card-info">
+            <h3>Building HTTP Servers & REST APIs</h3>
+            <p>Go's standard library <code>net/http</code> is production-ready. No Express needed.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="compare-grid">
+            <div class="code-block">
+              <div class="code-label js-label">⚡ Express.js</div>
+              <pre><span class="kw">const</span> express = <span class="fn">require</span>(<span class="str">'express'</span>)
+<span class="kw">const</span> app = <span class="fn">express</span>()
+
+app.<span class="fn">get</span>(<span class="str">'/users'</span>, (req, res) => {
+  res.<span class="fn">json</span>({ users: [] })
+})
+
+app.<span class="fn">listen</span>(<span class="num">8080</span>)</pre>
+            </div>
+            <div class="code-block">
+              <div class="code-label go-label">🐹 net/http (stdlib!)</div>
+              <pre"><span class="kw">func</span> <span class="fn">usersHandler</span>(w <span class="ty">http.ResponseWriter</span>,
+                    r *<span class="ty">http.Request</span>) {
+  <span class="pkg">json</span>.<span class="fn">NewEncoder</span>(w).<span class="fn">Encode</span>(
+    <span class="kw">map</span>[<span class="ty">string</span>]<span class="kw">interface</span>{}{"users": []<span class="ty">string</span>{}},
+  )
+}
+
+<span class="kw">func</span> <span class="fn">main</span>() {
+  http.<span class="fn">HandleFunc</span>(<span class="str">"/users"</span>, usersHandler)
+  http.<span class="fn">ListenAndServe</span>(<span class="str">":8080"</span>, <span class="kw">nil</span>)
+}</pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-top:16px">
+            <div class="code-label go-label-teal">🐹 Popular HTTP frameworks</div>
+            <pre><span class="cm">// Gin — fast, Express-like</span>
+<span class="cm">// go get github.com/gin-gonic/gin</span>
+r := <span class="fn">gin.Default</span>()
+r.<span class="fn">GET</span>(<span class="str">"/users/:id"</span>, <span class="kw">func</span>(c *<span class="ty">gin.Context</span>) {
+  id := c.<span class="fn">Param</span>(<span class="str">"id"</span>)
+  c.<span class="fn">JSON</span>(<span class="num">200</span>, <span class="fn">gin.H</span>{<span class="str">"id"</span>: id})
+})
+r.<span class="fn">Run</span>(<span class="str">":8080"</span>)
+
+<span class="cm">// Chi — lightweight, stdlib-compatible</span>
+<span class="cm">// Echo — high performance</span>
+<span class="cm">// Fiber — Express-inspired</span></pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://pkg.go.dev/net/http" target="_blank">📖 net/http docs</a>
+            <a class="ref-link blog" href="https://github.com/gin-gonic/gin" target="_blank">🔗 Gin Framework</a>
+            <a class="ref-link practice" href="https://github.com/go-chi/chi" target="_blank">🔗 Chi Router</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generics -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🧬</div>
+          <div class="card-info">
+            <h3>Generics (Go 1.18+)</h3>
+            <p>Write functions and types that work with any type safely.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 Generic Functions</div>
+            <pre><span class="cm">// Before generics (using interface{})</span>
+<span class="kw">func</span> <span class="fn">contains</span>(slice []<span class="kw">interface</span>{}, item <span class="kw">interface</span>{}) <span class="ty">bool</span> {
+  <span class="kw">for</span> _, v := <span class="kw">range</span> slice {
+    <span class="kw">if</span> v == item { <span class="kw">return</span> <span class="kw">true</span> }
+  }
+  <span class="kw">return</span> <span class="kw">false</span>
+}
+
+<span class="cm">// With Generics (Go 1.18+) — type safe!</span>
+<span class="kw">func</span> <span class="fn">Contains</span>[T <span class="ty">comparable</span>](slice []T, item T) <span class="ty">bool</span> {
+  <span class="kw">for</span> _, v := <span class="kw">range</span> slice {
+    <span class="kw">if</span> v == item { <span class="kw">return</span> <span class="kw">true</span> }
+  }
+  <span class="kw">return</span> <span class="kw">false</span>
+}
+
+<span class="cm">// Works with any type!</span>
+<span class="fn">Contains</span>([]<span class="ty">int</span>{<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>}, <span class="num">2</span>)          <span class="cm">// true</span>
+<span class="fn">Contains</span>([]<span class="ty">string</span>{<span class="str">"a"</span>, <span class="str">"b"</span>}, <span class="str">"a"</span>)  <span class="cm">// true</span>
+
+<span class="cm">// Generic Stack</span>
+<span class="kw">type</span> <span class="ty">Stack</span>[T <span class="kw">any</span>] <span class="kw">struct</span> {
+  items []T
+}
+<span class="kw">func</span> (s *<span class="ty">Stack</span>[T]) <span class="fn">Push</span>(item T) { s.items = <span class="fn">append</span>(s.items, item) }
+<span class="kw">func</span> (s *<span class="ty">Stack</span>[T]) <span class="fn">Pop</span>() T {
+  n := <span class="fn">len</span>(s.items) - <span class="num">1</span>
+  item := s.items[n]
+  s.items = s.items[:n]
+  <span class="kw">return</span> item
+}</pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://go.dev/doc/faq#generics" target="_blank">📖 Generics FAQ</a>
+            <a class="ref-link blog" href="https://go.dev/blog/intro-generics" target="_blank">📋 Intro to Generics</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testing -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🧪</div>
+          <div class="card-info">
+            <h3>Testing — Built Into Go</h3>
+            <p>No jest/mocha needed. <code>go test</code> is built-in, fast, and powerful.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 Writing Tests</div>
+            <pre><span class="cm">// math.go</span>
+<span class="kw">func</span> <span class="fn">Add</span>(a, b <span class="ty">int</span>) <span class="ty">int</span> { <span class="kw">return</span> a + b }
+
+<span class="cm">// math_test.go (same package, _test.go suffix)</span>
+<span class="kw">import</span> <span class="str">"testing"</span>
+
+<span class="kw">func</span> <span class="fn">TestAdd</span>(t *<span class="ty">testing.T</span>) {
+  result := <span class="fn">Add</span>(<span class="num">2</span>, <span class="num">3</span>)
+  <span class="kw">if</span> result != <span class="num">5</span> {
+    t.<span class="fn">Errorf</span>(<span class="str">"expected 5, got %d"</span>, result)
+  }
+}
+
+<span class="cm">// Table-driven tests (idiomatic Go)</span>
+<span class="kw">func</span> <span class="fn">TestAddTable</span>(t *<span class="ty">testing.T</span>) {
+  tests := []<span class="kw">struct</span>{ a, b, want <span class="ty">int</span> }{
+    {<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>},
+    {<span class="num">0</span>, <span class="num">0</span>, <span class="num">0</span>},
+    {-<span class="num">1</span>, <span class="num">1</span>, <span class="num">0</span>},
+  }
+  <span class="kw">for</span> _, tt := <span class="kw">range</span> tests {
+    got := <span class="fn">Add</span>(tt.a, tt.b)
+    <span class="kw">if</span> got != tt.want {
+      t.<span class="fn">Errorf</span>(<span class="str">"Add(%d,%d) = %d; want %d"</span>, tt.a, tt.b, got, tt.want)
+    }
+  }
+}
+
+<span class="cm"># Run tests</span>
+<span class="cm"># go test ./...</span>
+<span class="cm"># go test -v -cover ./...</span>
+<span class="cm"># go test -bench=. ./...</span></pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://pkg.go.dev/testing" target="_blank">📖 testing package</a>
+            <a class="ref-link blog" href="https://go.dev/doc/tutorial/add-a-test" target="_blank">📋 Add a Test Tutorial</a>
+            <a class="ref-link practice" href="https://github.com/stretchr/testify" target="_blank">🔗 testify library</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Context -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">⏱️</div>
+          <div class="card-info">
+            <h3>Context — Cancellation & Deadlines</h3>
+            <p>Every production Go API passes a <code>context.Context</code> for timeout/cancellation.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 context.Context</div>
+            <pre"><span class="kw">import</span> (
+  <span class="str">"context"</span>
+  <span class="str">"time"</span>
+)
+
+<span class="cm">// Always pass context as FIRST parameter</span>
+<span class="kw">func</span> <span class="fn">fetchUser</span>(ctx <span class="ty">context.Context</span>, id <span class="ty">int</span>) (*<span class="ty">User</span>, <span class="ty">error</span>) {
+  <span class="cm">// Pass ctx to all downstream calls</span>
+  <span class="kw">return</span> db.<span class="fn">QueryContext</span>(ctx, <span class="str">"SELECT..."</span>, id)
+}
+
+<span class="cm">// Timeout — cancel after 5 seconds</span>
+ctx, cancel := <span class="pkg">context</span>.<span class="fn">WithTimeout</span>(
+  <span class="pkg">context</span>.<span class="fn">Background</span>(), <span class="num">5</span>*time.Second,
+)
+<span class="kw">defer</span> <span class="fn">cancel</span>()  <span class="cm">// always defer cancel!</span>
+
+user, err := <span class="fn">fetchUser</span>(ctx, <span class="num">123</span>)
+
+<span class="cm">// HTTP handlers get context from request</span>
+<span class="kw">func</span> <span class="fn">handler</span>(w <span class="ty">http.ResponseWriter</span>, r *<span class="ty">http.Request</span>) {
+  ctx := r.<span class="fn">Context</span>()
+  <span class="fn">fetchUser</span>(ctx, <span class="num">123</span>)
+}</pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://pkg.go.dev/context" target="_blank">📖 context package</a>
+            <a class="ref-link blog" href="https://go.dev/blog/context" target="_blank">📋 Go Blog — Context</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider">Senior Level</div>
+
+  <!-- PHASE 5 -->
+  <div class="phase phase-5 fade-in" id="phase5">
+    <div class="phase-header">
+      <div class="phase-num">05</div>
+      <div class="phase-title">
+        <h2>🏆 Senior Engineering</h2>
+        <p>Architecture, performance, security, CI/CD, microservices, and leadership topics.</p>
+      </div>
+      <span class="phase-tag">MONTH 3–6+</span>
+    </div>
+
+    <div class="cards">
+
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🏛️</div>
+          <div class="card-info">
+            <h3>Clean Architecture & Design Patterns</h3>
+            <p>Repository pattern, dependency injection, hexagonal architecture in Go.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 Repository Pattern</div>
+            <pre><span class="cm">// Define interface (domain layer)</span>
+<span class="kw">type</span> <span class="ty">UserRepository</span> <span class="kw">interface</span> {
+  <span class="fn">FindByID</span>(ctx <span class="ty">context.Context</span>, id <span class="ty">int</span>) (*<span class="ty">User</span>, <span class="ty">error</span>)
+  <span class="fn">Create</span>(ctx <span class="ty">context.Context</span>, u *<span class="ty">User</span>) <span class="ty">error</span>
+}
+
+<span class="cm">// Postgres implementation</span>
+<span class="kw">type</span> <span class="ty">postgresUserRepo</span> <span class="kw">struct</span>{ db *sql.<span class="ty">DB</span> }
+
+<span class="kw">func</span> (r *<span class="ty">postgresUserRepo</span>) <span class="fn">FindByID</span>(ctx <span class="ty">context.Context</span>, id <span class="ty">int</span>) (*<span class="ty">User</span>, <span class="ty">error</span>) {
+  <span class="cm">// SQL query...</span>
+}
+
+<span class="cm">// Service depends on INTERFACE not implementation</span>
+<span class="kw">type</span> <span class="ty">UserService</span> <span class="kw">struct</span> {
+  repo <span class="ty">UserRepository</span>  <span class="cm">// can swap with mock!</span>
+}
+
+<span class="cm">// Constructor injection</span>
+<span class="kw">func</span> <span class="fn">NewUserService</span>(repo <span class="ty">UserRepository</span>) *<span class="ty">UserService</span> {
+  <span class="kw">return</span> &<span class="ty">UserService</span>{repo: repo}
+}</pre>
+          </div>
+
+          <div class="note tip">
+            <span class="note-icon">💡</span>
+            <div><strong>Project structure used in production:</strong><br/>
+            <code>/cmd</code> — entry points &nbsp;|&nbsp; <code>/internal</code> — private code &nbsp;|&nbsp; <code>/pkg</code> — public libraries &nbsp;|&nbsp; <code>/api</code> — proto/swagger definitions</div>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link blog" href="https://github.com/golang-standards/project-layout" target="_blank">🔗 Go Project Layout</a>
+            <a class="ref-link blog" href="https://threedots.tech/post/repository-pattern-in-go/" target="_blank">📋 Repository Pattern</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <div class="card-info">
+            <h3>Performance Profiling & Optimization</h3>
+            <p>Go has world-class built-in profiling via <code>pprof</code>.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 pprof profiling</div>
+            <pre"><span class="kw">import</span> _ <span class="str">"net/http/pprof"</span>
+
+<span class="cm">// Just import it! Adds /debug/pprof endpoints</span>
+<span class="kw">go</span> http.<span class="fn">ListenAndServe</span>(<span class="str">":6060"</span>, <span class="kw">nil</span>)
+
+<span class="cm"># CPU profile — 30 seconds</span>
+<span class="cm"># go tool pprof http://localhost:6060/debug/pprof/profile?seconds=30</span>
+
+<span class="cm"># Memory profile</span>
+<span class="cm"># go tool pprof http://localhost:6060/debug/pprof/heap</span>
+
+<span class="cm"># Goroutine profile (find leaks!)</span>
+<span class="cm"># go tool pprof http://localhost:6060/debug/pprof/goroutine</span>
+
+<span class="cm">// Benchmark in tests</span>
+<span class="kw">func</span> <span class="fn">BenchmarkAdd</span>(b *<span class="ty">testing.B</span>) {
+  <span class="kw">for</span> i := <span class="num">0</span>; i < b.N; i++ {
+    <span class="fn">Add</span>(<span class="num">1</span>, <span class="num">2</span>)
+  }
+}
+<span class="cm"># go test -bench=. -benchmem ./...</span></pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link official" href="https://pkg.go.dev/net/http/pprof" target="_blank">📖 pprof docs</a>
+            <a class="ref-link blog" href="https://go.dev/blog/pprof" target="_blank">📋 Profiling Go Programs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🚢</div>
+          <div class="card-info">
+            <h3>Docker, Kubernetes & CI/CD</h3>
+            <p>Go binaries are tiny and self-contained — perfect for containers.</p>
+          </div>
+          <div class="card-toggle">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="code-block">
+            <div class="code-label go-label">🐹 Minimal Dockerfile for Go</div>
+            <pre"><span class="cm"># Multi-stage build — final image &lt; 20MB!</span>
+<span class="kw">FROM</span> golang:1.22-alpine <span class="kw">AS</span> builder
+<span class="kw">WORKDIR</span> /app
+<span class="kw">COPY</span> go.mod go.sum ./
+<span class="kw">RUN</span> go mod download
+<span class="kw">COPY</span> . .
+<span class="kw">RUN</span> CGO_ENABLED=0 go build -o server ./cmd/server
+
+<span class="cm"># Final image — just the binary!</span>
+<span class="kw">FROM</span> scratch
+<span class="kw">COPY</span> --from=builder /app/server /server
+<span class="kw">EXPOSE</span> 8080
+<span class="kw">ENTRYPOINT</span> ["/server"]</pre>
+          </div>
+
+          <div class="ref-links">
+            <a class="ref-link blog" href="https://docs.docker.com/language/golang/" target="_blank">🔗 Docker + Go Guide</a>
+            <a class="ref-link blog" href="https://github.com/actions/setup-go" target="_blank">🔗 GitHub Actions for Go</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LEARNING PATH -->
+  <div class="section-divider">Your Learning Timeline</div>
+
+  <div class="fade-in" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px">
+    <h2 style="font-size:22px;margin-bottom:8px;">📅 Suggested Timeline</h2>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:28px;">Based on your JS background, you'll move faster than most beginners.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-left"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+        <div class="timeline-content">
+          <h4>Week 1–2: Foundations</h4>
+          <p>Setup, syntax, types, variables, functions, control flow. Complete <a href="https://go.dev/tour" target="_blank" style="color:var(--go-cyan)">A Tour of Go</a>.</p>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:100%"></div></div>
+          <div class="progress-label"><span>Start here</span><span>100%</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left"><div class="timeline-dot" style="background:var(--go-teal);outline-color:var(--go-teal)"></div><div class="timeline-line"></div></div>
+        <div class="timeline-content">
+          <h4>Week 3–4: Data Structures & OOP</h4>
+          <p>Structs, interfaces, slices, maps, pointers. Build a CLI todo app.</p>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:80%;background:linear-gradient(90deg,var(--go-teal),#00f0c0)"></div></div>
+          <div class="progress-label"><span>Build something!</span><span>80%</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left"><div class="timeline-dot" style="background:var(--yellow);outline-color:var(--yellow)"></div><div class="timeline-line"></div></div>
+        <div class="timeline-content">
+          <h4>Week 5–7: Concurrency & HTTP</h4>
+          <p>Goroutines, channels, net/http. Build a REST API with a DB.</p>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:60%;background:linear-gradient(90deg,var(--yellow),#f59e0b)"></div></div>
+          <div class="progress-label"><span>This is where Go shines</span><span>60%</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left"><div class="timeline-dot" style="background:var(--accent);outline-color:var(--accent)"></div><div class="timeline-line"></div></div>
+        <div class="timeline-content">
+          <h4>Month 2–3: Testing, Generics, Patterns</h4>
+          <p>Table tests, benchmarks, clean architecture. Contribute to OSS Go projects.</p>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:40%;background:linear-gradient(90deg,var(--accent),#fb923c)"></div></div>
+          <div class="progress-label"><span>Real engineering</span><span>40%</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left"><div class="timeline-dot" style="background:var(--red);outline-color:var(--red)"></div></div>
+        <div class="timeline-content">
+          <h4>Month 3–6: Senior Level</h4>
+          <p>Profiling, distributed systems, microservices, Kubernetes, mentoring others.</p>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:20%;background:linear-gradient(90deg,var(--red),#f87171)"></div></div>
+          <div class="progress-label"><span>Never stop learning</span><span>∞</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="section-divider">Best Resources</div>
+
+  <div class="fade-in" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px">
+    <h2 style="font-size:22px;margin-bottom:24px;">📚 The Ultimate Go Resource List</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div>
+        <h3 style="font-size:14px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">📖 Official</h3>
+        <div class="ref-links" style="flex-direction:column">
+          <a class="ref-link official" href="https://go.dev/tour/" target="_blank">A Tour of Go — Start Here</a>
+          <a class="ref-link official" href="https://go.dev/doc/effective_go" target="_blank">Effective Go</a>
+          <a class="ref-link official" href="https://pkg.go.dev/std" target="_blank">Standard Library Docs</a>
+          <a class="ref-link official" href="https://go.dev/ref/spec" target="_blank">Language Specification</a>
+          <a class="ref-link official" href="https://go.dev/blog/" target="_blank">The Go Blog</a>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:14px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">📹 Videos & Courses</h3>
+        <div class="ref-links" style="flex-direction:column">
+          <a class="ref-link video" href="https://www.youtube.com/@TechWorldwithNana" target="_blank">TechWorld with Nana — Go Tutorials</a>
+          <a class="ref-link video" href="https://www.youtube.com/watch?v=YS4e4q9oBaU" target="_blank">freeCodeCamp — Full Go Course</a>
+          <a class="ref-link video" href="https://www.youtube.com/c/GolangCafe" target="_blank">Golang Café YouTube</a>
+          <a class="ref-link video" href="https://frontendmasters.com/courses/go-for-js-devs/" target="_blank">Go for JS Devs — FrontendMasters</a>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:14px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">📚 Books</h3>
+        <div class="ref-links" style="flex-direction:column">
+          <a class="ref-link book" href="https://www.gopl.io/" target="_blank">The Go Programming Language (Donovan)</a>
+          <a class="ref-link book" href="https://learning.oreilly.com/library/view/learning-go/9781492077206/" target="_blank">Learning Go — Jon Bodner</a>
+          <a class="ref-link book" href="https://threedots.tech/go-with-the-domain/" target="_blank">Go With The Domain — FREE</a>
+          <a class="ref-link book" href="https://100go.co" target="_blank">100 Go Mistakes — Teiva Harsanyi</a>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:14px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">🏋️ Practice</h3>
+        <div class="ref-links" style="flex-direction:column">
+          <a class="ref-link practice" href="https://exercism.org/tracks/go" target="_blank">Exercism — Go Track</a>
+          <a class="ref-link practice" href="https://gobyexample.com" target="_blank">Go by Example</a>
+          <a class="ref-link practice" href="https://gophercises.com" target="_blank">Gophercises — Jon Calhoun</a>
+          <a class="ref-link practice" href="https://github.com/quii/learn-go-with-tests" target="_blank">Learn Go with Tests — FREE</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Built for a Go learner from <strong>Dhaka, Bangladesh 🇧🇩</strong></p>
+  <p style="margin-top:8px">Remember: <strong>The best way to learn Go is to build things with it.</strong></p>
+  <p style="margin-top:8px;font-family:'Space Mono',monospace;font-size:11px;color:#334155">
+    Start → <a href="https://go.dev/tour" target="_blank" style="color:var(--go-cyan)">go.dev/tour</a> → 
+    <a href="https://gobyexample.com" target="_blank" style="color:var(--go-teal)">gobyexample.com</a> → 
+    <a href="https://github.com/quii/learn-go-with-tests" target="_blank" style="color:var(--yellow)">learn-go-with-tests</a> → 
+    Build something real 🚀
+  </p>
+</footer>
+
+<script>
+  function toggleCard(card) {
+    card.classList.toggle('open');
+  }
+
+  // Scroll animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Auto-open first card in each phase
+  document.querySelectorAll('.phase').forEach(phase => {
+    const first = phase.querySelector('.card');
+    if (first) first.classList.add('open');
+  });
+</script>
+</body>
+</html>
